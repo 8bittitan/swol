@@ -34,7 +34,7 @@ export default function Dashboard() {
   const { user } = useLoaderData<typeof loader>();
 
   return (
-    <main className="grid grid-cols-[350px_1fr] h-screen">
+    <main className="grid grid-cols-[300px_1fr] h-screen">
       <nav className="bg-gray-800 text-white">
         <div className="bg-gray-900 p-6 mb-4">
           <h3 className="text-2xl">SWOL 💪</h3>
@@ -50,7 +50,7 @@ export default function Dashboard() {
         </div>
       </nav>
       <div>
-        <header className="flex justify-end p-6 shadow-lg">
+        <header className="flex justify-end p-6 shadow bg-white">
           <Menu as="div" className="relative ml-3 h-8">
             <Menu.Button>
               <span className="sr-only">Open user menu</span>
@@ -82,7 +82,7 @@ export default function Dashboard() {
             </Menu.Items>
           </Menu>
         </header>
-        <div className="p-6 bg-gray-200 h-full">
+        <div className="p-6">
           <Outlet />
         </div>
       </div>

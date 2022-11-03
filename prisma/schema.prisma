@@ -11,13 +11,14 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
+  id        String     @id @default(cuid())
+  email     String     @unique
   password  String?
   profile   Profile?
-  widgets   Widget[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  exercises Exercise[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Widget    Widget[]
 
   @@index([id, email])
 }
@@ -33,7 +34,28 @@ model Profile {
   @@index(userId)
 }
 
-// This is just an example. A widget can be anything you need, a blog post, an invoice, a chat message, etc.
+model Exercise {
+  id        String   @id @default(cuid())
+  name      String
+  sets      Set[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+
+  @@index(userId)
+}
+
+model Set {
+  id         String   @id @default(cuid())
+  weight     Float
+  reps       Int
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  exerciseId String
+
+  @@index(exerciseId)
+}
+
 model Widget {
   id          String @id @default(cuid())
   title       String

@@ -41,12 +41,12 @@ export default function App() {
   );
 
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className="h-full bg-gray-200">
       <head>
         <Meta />
         <Links />
       </head>
-      <body className="h-full">
+      <body className="h-full bg-gray-200">
         <Layout user={user} isInDashboard={isInDashboard} />
         <ScrollRestoration />
         <Scripts />

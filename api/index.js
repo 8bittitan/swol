@@ -205,7 +205,7 @@ authenticator.use(
 );
 
 // app/styles/tailwind.css
-var tailwind_default = "/build/_assets/tailwind-WJIQGPOF.css";
+var tailwind_default = "/build/_assets/tailwind-IYL3J25R.css";
 
 // app/components/Layout/Layout.tsx
 var import_react4 = require("@remix-run/react");
@@ -442,7 +442,7 @@ function App() {
   );
   return /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("html", {
     lang: "en",
-    className: "h-full",
+    className: "h-full bg-gray-200",
     children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("head", {
         children: [
@@ -463,7 +463,7 @@ function App() {
         columnNumber: 7
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("body", {
-        className: "h-full",
+        className: "h-full bg-gray-200",
         children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Layout, {
             user,
@@ -798,7 +798,7 @@ var NavItem = ({ path, children }) => {
 function Dashboard() {
   let { user } = (0, import_react10.useLoaderData)();
   return /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("main", {
-    className: "grid grid-cols-[350px_1fr] h-screen",
+    className: "grid grid-cols-[300px_1fr] h-screen",
     children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("nav", {
         className: "bg-gray-800 text-white",
@@ -870,7 +870,7 @@ function Dashboard() {
       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
         children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("header", {
-            className: "flex justify-end p-6 shadow-lg",
+            className: "flex justify-end p-6 shadow bg-white",
             children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react9.Menu, {
               as: "div",
               className: "relative ml-3 h-8",
@@ -956,7 +956,7 @@ function Dashboard() {
             columnNumber: 9
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
-            className: "p-6 bg-gray-200 h-full",
+            className: "p-6",
             children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react10.Outlet, {}, void 0, !1, {
               fileName: "app/routes/dashboard.tsx",
               lineNumber: 86,
@@ -984,15 +984,41 @@ function Dashboard() {
 // app/routes/dashboard/exercises/index.tsx
 var exercises_exports = {};
 __export(exercises_exports, {
-  default: () => ExercisesPage
+  default: () => ExercisesPage,
+  loader: () => loader7
 });
+var import_node7 = require("@remix-run/node"), import_react11 = require("@remix-run/react");
+
+// app/models/exercise.server.ts
+var import_date_fns = require("date-fns");
+var getExercisesForUser = async (userId, forDate = new Date()) => {
+  try {
+    return await prisma.exercise.findMany({
+      where: {
+        userId,
+        createdAt: { gte: (0, import_date_fns.startOfDay)(forDate), lte: (0, import_date_fns.endOfDay)(forDate) }
+      }
+    });
+  } catch {
+    return [];
+  }
+};
+
+// app/routes/dashboard/exercises/index.tsx
 var import_jsx_dev_runtime = require("react/jsx-dev-runtime");
+async function loader7({ request }) {
+  let user = await requiresUser(request), exercises = await getExercisesForUser(user.id);
+  return (0, import_node7.json)({
+    exercises
+  });
+}
 function ExercisesPage() {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("h1", {
+  let { exercises } = (0, import_react11.useLoaderData)();
+  return console.dir(exercises), /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("h1", {
     children: "Exercises Page"
   }, void 0, !1, {
     fileName: "app/routes/dashboard/exercises/index.tsx",
-    lineNumber: 2,
+    lineNumber: 23,
     columnNumber: 10
   }, this);
 }
@@ -1002,13 +1028,13 @@ var dashboard_exports2 = {};
 __export(dashboard_exports2, {
   action: () => action2,
   default: () => DashboardIndex2,
-  loader: () => loader7
+  loader: () => loader8
 });
-var import_node7 = require("@remix-run/node"), import_react11 = require("@remix-run/react");
+var import_node8 = require("@remix-run/node"), import_react12 = require("@remix-run/react");
 var import_jsx_dev_runtime = require("react/jsx-dev-runtime");
-async function loader7({ request }) {
+async function loader8({ request }) {
   let user = await requiresUser(request), widgets = await widgetsForUser(user.id);
-  return (0, import_node7.json)({
+  return (0, import_node8.json)({
     widgets
   });
 }
@@ -1020,15 +1046,15 @@ async function action2({ request }) {
       throw new Error("Invalid action");
     let widgetId = (_a = formData.get("widgetId")) == null ? void 0 : _a.toString();
     if (!widgetId)
-      return (0, import_node7.json)({ error: "Cannot delete that Widget." });
+      return (0, import_node8.json)({ error: "Cannot delete that Widget." });
     let user = await requiresUser(request);
     return await deleteWidget(widgetId, user.id), !0;
   } catch (err) {
-    return console.error(err), (0, import_node7.json)({ error: "Cannot delete that Widget." });
+    return console.error(err), (0, import_node8.json)({ error: "Cannot delete that Widget." });
   }
 }
 function DashboardIndex2() {
-  let data = (0, import_react11.useLoaderData)();
+  let data = (0, import_react12.useLoaderData)();
   return /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
     children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("h2", {
@@ -1042,7 +1068,7 @@ function DashboardIndex2() {
       data.widgets.length < 1 && /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", {
         children: [
           "You have no widgets yet! ",
-          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react11.Link, {
+          /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react12.Link, {
             to: "/widgets/new",
             children: "Click here"
           }, void 0, !1, {
@@ -1076,7 +1102,7 @@ function DashboardIndex2() {
               lineNumber: 61,
               columnNumber: 13
             }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react11.Link, {
+            /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react12.Link, {
               to: `/widgets/${widget.id}`,
               rel: "prefetch",
               children: "View"
@@ -1085,7 +1111,7 @@ function DashboardIndex2() {
               lineNumber: 62,
               columnNumber: 13
             }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react11.Form, {
+            /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react12.Form, {
               method: "post",
               children: [
                 /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("input", {
@@ -1145,7 +1171,7 @@ var routes_exports = {};
 __export(routes_exports, {
   default: () => Index
 });
-var import_react12 = require("@remix-run/react");
+var import_react13 = require("@remix-run/react");
 
 // app/assets/our_last_night.jpg
 var our_last_night_default = "/build/_assets/our_last_night-IVMASJGI.jpg";
@@ -1219,7 +1245,7 @@ function Index() {
                   children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
                     className: "space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0",
                     children: [
-                      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react12.Link, {
+                      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react13.Link, {
                         to: "/join",
                         className: "flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-red-700 shadow-sm hover:bg-blue-50 sm:px-8",
                         "data-test": "home__join",
@@ -1229,7 +1255,7 @@ function Index() {
                         lineNumber: 34,
                         columnNumber: 19
                       }, this),
-                      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react12.Link, {
+                      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react13.Link, {
                         to: "/login",
                         className: "flex items-center justify-center rounded-md bg-red-500 px-4 py-3 font-medium text-white hover:bg-red-600  ",
                         children: "Log In"
@@ -1301,7 +1327,7 @@ __export(login_exports, {
   default: () => Login,
   meta: () => meta2
 });
-var import_react13 = require("@remix-run/react"), import_react14 = __toESM(require("react"));
+var import_react14 = require("@remix-run/react"), import_react15 = __toESM(require("react"));
 var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), meta2 = () => ({
   title: "Login"
 }), action3 = async ({ request, context }) => {
@@ -1314,8 +1340,8 @@ var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), meta2 = () => ({
 };
 function Login() {
   var _a, _b;
-  let actionData = (0, import_react13.useActionData)(), emailRef = import_react14.default.useRef(null), passwordRef = import_react14.default.useRef(null);
-  return import_react14.default.useEffect(() => {
+  let actionData = (0, import_react14.useActionData)(), emailRef = import_react15.default.useRef(null), passwordRef = import_react15.default.useRef(null);
+  return import_react15.default.useEffect(() => {
     var _a2, _b2, _c, _d;
     (_a2 = actionData == null ? void 0 : actionData.errors) != null && _a2.email ? (_b2 = emailRef.current) == null || _b2.focus() : (_c = actionData == null ? void 0 : actionData.errors) != null && _c.password && ((_d = passwordRef.current) == null || _d.focus());
   }, [actionData]), /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
@@ -1323,7 +1349,7 @@ function Login() {
     children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
         className: "mx-auto w-full max-w-md px-8 mt-8 mb-8",
-        children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react13.Form, {
+        children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react14.Form, {
           action: "/auth/google",
           children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("button", {
             type: "submit",
@@ -1360,7 +1386,7 @@ function Login() {
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
         className: "mx-auto w-full max-w-md px-8",
-        children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react13.Form, {
+        children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react14.Form, {
           method: "post",
           className: "space-y-6",
           noValidate: !0,
@@ -1437,7 +1463,7 @@ function Login() {
                   children: [
                     "Don't have an account?",
                     " ",
-                    /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react13.Link, {
+                    /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react14.Link, {
                       className: "text-blue-500 underline",
                       to: "/join",
                       children: "Sign up"
@@ -1483,12 +1509,12 @@ __export(join_exports, {
   action: () => action4,
   default: () => Join
 });
-var import_node8 = require("@remix-run/node"), import_react15 = require("@remix-run/react");
+var import_node9 = require("@remix-run/node"), import_react16 = require("@remix-run/react");
 var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), action4 = async ({ request, context }) => {
   var _a, _b;
   let req = Object.assign({}, request), form = await request.formData(), email = (_a = form.get("email")) == null ? void 0 : _a.toString(), password = (_b = form.get("password")) == null ? void 0 : _b.toString();
   if (!email || !password)
-    return (0, import_node8.json)({
+    return (0, import_node9.json)({
       error: "Missing email or password"
     });
   try {
@@ -1498,19 +1524,19 @@ var import_jsx_dev_runtime = require("react/jsx-dev-runtime"), action4 = async (
       successRedirect: "/sites"
     });
   } catch (err) {
-    return (0, import_node8.json)({
+    return (0, import_node9.json)({
       error: err.message
     });
   }
 };
 function Join() {
-  let actionData = (0, import_react15.useActionData)();
+  let actionData = (0, import_react16.useActionData)();
   return /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
     className: "flex min-h-full flex-col justify-center",
     children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
         className: "mx-auto w-full max-w-md px-8 mt-8 mb-8",
-        children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react15.Form, {
+        children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react16.Form, {
           action: "/auth/github",
           children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("button", {
             type: "submit",
@@ -1547,7 +1573,7 @@ function Join() {
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", {
         className: "mx-auto w-full max-w-md px-8",
-        children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react15.Form, {
+        children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_react16.Form, {
           method: "post",
           className: "space-y-6",
           noValidate: !0,
@@ -1611,7 +1637,7 @@ function Join() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { version: "a8f5ea15", entry: { module: "/build/entry.client-LHSRIYNB.js", imports: ["/build/_shared/chunk-HETKVTVX.js", "/build/_shared/chunk-BPQL3L3K.js", "/build/_shared/chunk-5KL4PAQL.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-QA6WLTBQ.js", imports: ["/build/_shared/chunk-5CSBWAWC.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/auth/google": { id: "routes/auth/google", parentId: "root", path: "auth/google", index: void 0, caseSensitive: void 0, module: "/build/routes/auth/google-BDQYWB3X.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/auth/google/callback": { id: "routes/auth/google/callback", parentId: "routes/auth/google", path: "callback", index: void 0, caseSensitive: void 0, module: "/build/routes/auth/google/callback-LXZECHUO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/auth/logout": { id: "routes/auth/logout", parentId: "root", path: "auth/logout", index: void 0, caseSensitive: void 0, module: "/build/routes/auth/logout-MORH5CFF.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard": { id: "routes/dashboard", parentId: "root", path: "dashboard", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard-A7QBGP3Y.js", imports: ["/build/_shared/chunk-4RQJHZLK.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/exercises/index": { id: "routes/dashboard/exercises/index", parentId: "routes/dashboard", path: "exercises", index: !0, caseSensitive: void 0, module: "/build/routes/dashboard/exercises/index-G432H2SJ.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/index": { id: "routes/dashboard/index", parentId: "routes/dashboard", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/dashboard/index-5KOYI334.js", imports: ["/build/_shared/chunk-2737AVW4.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-T3MBTDWV.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/join": { id: "routes/join", parentId: "root", path: "join", index: void 0, caseSensitive: void 0, module: "/build/routes/join-QZCXOU3V.js", imports: ["/build/_shared/chunk-OZVJ2KGS.js", "/build/_shared/chunk-DHNXSRSB.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login": { id: "routes/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/login-2JU7OFAQ.js", imports: ["/build/_shared/chunk-OZVJ2KGS.js", "/build/_shared/chunk-DHNXSRSB.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/widgets/$id": { id: "routes/widgets/$id", parentId: "root", path: "widgets/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/widgets/$id-PUBYRCUC.js", imports: ["/build/_shared/chunk-2737AVW4.js", "/build/_shared/chunk-4RQJHZLK.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/widgets/new": { id: "routes/widgets/new", parentId: "root", path: "widgets/new", index: void 0, caseSensitive: void 0, module: "/build/routes/widgets/new-LVITEN4P.js", imports: ["/build/_shared/chunk-DHNXSRSB.js", "/build/_shared/chunk-2737AVW4.js", "/build/_shared/chunk-4RQJHZLK.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-A8F5EA15.js" };
+var assets_manifest_default = { version: "537f5fab", entry: { module: "/build/entry.client-SHXLC77Q.js", imports: ["/build/_shared/chunk-KZAEICYQ.js", "/build/_shared/chunk-5KL4PAQL.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-OW2ML3AZ.js", imports: ["/build/_shared/chunk-KSEB3HTN.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/auth/google": { id: "routes/auth/google", parentId: "root", path: "auth/google", index: void 0, caseSensitive: void 0, module: "/build/routes/auth/google-BDQYWB3X.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/auth/google/callback": { id: "routes/auth/google/callback", parentId: "routes/auth/google", path: "callback", index: void 0, caseSensitive: void 0, module: "/build/routes/auth/google/callback-LXZECHUO.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/auth/logout": { id: "routes/auth/logout", parentId: "root", path: "auth/logout", index: void 0, caseSensitive: void 0, module: "/build/routes/auth/logout-MORH5CFF.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard": { id: "routes/dashboard", parentId: "root", path: "dashboard", index: void 0, caseSensitive: void 0, module: "/build/routes/dashboard-UP2SYWIY.js", imports: ["/build/_shared/chunk-4RQJHZLK.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/exercises/index": { id: "routes/dashboard/exercises/index", parentId: "routes/dashboard", path: "exercises", index: !0, caseSensitive: void 0, module: "/build/routes/dashboard/exercises/index-EYVSP5PY.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/dashboard/index": { id: "routes/dashboard/index", parentId: "routes/dashboard", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/dashboard/index-OAMNQCVC.js", imports: ["/build/_shared/chunk-2737AVW4.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-GFGVMUVO.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/join": { id: "routes/join", parentId: "root", path: "join", index: void 0, caseSensitive: void 0, module: "/build/routes/join-7B4SUXG5.js", imports: ["/build/_shared/chunk-OZVJ2KGS.js", "/build/_shared/chunk-OJ2LS7XD.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login": { id: "routes/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/login-T7W6WLZJ.js", imports: ["/build/_shared/chunk-OZVJ2KGS.js", "/build/_shared/chunk-OJ2LS7XD.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/widgets/$id": { id: "routes/widgets/$id", parentId: "root", path: "widgets/:id", index: void 0, caseSensitive: void 0, module: "/build/routes/widgets/$id-P7XS7GP2.js", imports: ["/build/_shared/chunk-2737AVW4.js", "/build/_shared/chunk-4RQJHZLK.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/widgets/new": { id: "routes/widgets/new", parentId: "root", path: "widgets/new", index: void 0, caseSensitive: void 0, module: "/build/routes/widgets/new-ELPJP5XT.js", imports: ["/build/_shared/chunk-OJ2LS7XD.js", "/build/_shared/chunk-2737AVW4.js", "/build/_shared/chunk-4RQJHZLK.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-537F5FAB.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
