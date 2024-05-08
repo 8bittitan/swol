@@ -1,3 +1,4 @@
+import PageTitle from "@/Components/page-title";
 import { Button } from "@/Components/ui/button";
 import {
     Card,
@@ -8,15 +9,11 @@ import {
 } from "@/Components/ui/card";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
+import { Plan } from "@/types/plans";
 import { Link } from "@inertiajs/react";
 
 type IndexPageProps = {
-    workoutPlans: {
-        id: number;
-        name: string;
-        description: string | null;
-        status: string;
-    }[];
+    workoutPlans: Plan[];
 };
 
 export default function WorkoutPlansIndexPage({
@@ -24,11 +21,9 @@ export default function WorkoutPlansIndexPage({
     workoutPlans,
 }: PageProps<IndexPageProps>) {
     return (
-        <Authenticated user={auth.user}>
-            <div className="max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto py-8">
-                <div className="flex items-center justify-between mb-8">
-                    <h1>Plans page</h1>
-
+        <Authenticated user={auth.user} header={<PageTitle>Plans</PageTitle>}>
+            <div className="px-4 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div className="flex items-center justify-end mb-8">
                     <Button asChild>
                         <Link href={route("plans.create")}>
                             Create a new plan
@@ -36,7 +31,7 @@ export default function WorkoutPlansIndexPage({
                     </Button>
                 </div>
 
-                <div className="grid gap-4 grid-cols-2">
+                <div className="grid grid-cols-2 gap-4">
                     {workoutPlans.map((plan) => (
                         <Card key={plan.id}>
                             <CardHeader>

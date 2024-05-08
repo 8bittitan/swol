@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\WorkoutPlan;
 
-use App\Enums\WorkoutPlanStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class CreateWorkoutPlanRequest extends FormRequest
+class CreateLogRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +22,10 @@ class CreateWorkoutPlanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['string', 'required'],
-            'description' => ['string'],
-            'status' => ['string', Rule::enum(WorkoutPlanStatusEnum::class)],
-            'exercises' => ['required', 'array'],
-            'exercises.*' => ['required', 'array:name'],
-            'exercises.*.name' => ['string', 'required'],
+            'reps' => ['integer', 'required'],
+            'weight' => ['integer', 'required'],
+            'exercise_id' => ['integer', 'required'],
+            'is_warmup' => ['boolean', 'nullable'],
         ];
     }
 }

@@ -39,6 +39,10 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
         post(route("plans.store"));
     };
 
+    if (Object.keys(errors).length > 0) {
+        console.dir(errors);
+    }
+
     return (
         <Authenticated
             user={auth.user}
@@ -48,15 +52,15 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                 <form onSubmit={handleSubmit}>
                     <div className="grid grid-cols-[500px,1fr] gap-4">
                         <div>
-                            <h4 className="font-bold text-lg mb-2">
+                            <h4 className="mb-2 text-lg font-bold">
                                 Exercises for plan
                             </h4>
                             <div
-                                className="border-dashed border rounded-lg min-h-full flex flex-col space-y-4 flex-1"
+                                className="flex flex-col flex-1 min-h-full space-y-4 border border-dashed rounded-lg"
                                 onDragOver={(e) => {
                                     if (
                                         e.dataTransfer.types.includes(
-                                            "exercise",
+                                            "exercise"
                                         )
                                     ) {
                                         e.preventDefault();
@@ -65,19 +69,19 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                                 }}
                                 onDrop={(e) => {
                                     const transfer = JSON.parse(
-                                        e.dataTransfer.getData("exercise"),
+                                        e.dataTransfer.getData("exercise")
                                     );
 
                                     setData(
                                         "exercises",
-                                        data.exercises.concat(transfer),
+                                        data.exercises.concat(transfer)
                                     );
                                 }}
                             >
                                 {data.exercises.map((exercise, i) => (
                                     <div
                                         key={i}
-                                        className="bg-stone-200 rounded-lg p-4"
+                                        className="p-4 rounded-lg bg-stone-200"
                                     >
                                         {exercise.name}
                                     </div>
@@ -85,8 +89,8 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                             </div>
                         </div>
                         <div className="flex flex-col space-y-4">
-                            <div className="flex space-x-4 w-full">
-                                <div className="flex flex-col space-y-2 flex-1">
+                            <div className="flex w-full space-x-4">
+                                <div className="flex flex-col flex-1 space-y-1">
                                     <Label htmlFor="name">Plan name</Label>
                                     <Input
                                         id="name"
@@ -98,12 +102,12 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                                         }
                                     />
                                     {errors.name && (
-                                        <p className="text-destructive font-semibold">
+                                        <p className="text-sm font-semibold text-destructive">
                                             {errors.name}
                                         </p>
                                     )}
                                 </div>
-                                <div className="flex flex-col space-y-2 flex-1">
+                                <div className="flex flex-col flex-1 space-y-1">
                                     <Label htmlFor="status">Plan status</Label>
                                     <Select
                                         name="status"
@@ -127,13 +131,13 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                                         </SelectContent>
                                     </Select>
                                     {errors.status && (
-                                        <p className="text-destructive font-semibold">
+                                        <p className="text-sm font-semibold text-destructive">
                                             {errors.status}
                                         </p>
                                     )}
                                 </div>
                             </div>
-                            <div className="flex flex-col space-y-2">
+                            <div className="flex flex-col space-y-1">
                                 <Label htmlFor="description">Description</Label>
                                 <Input
                                     id="description"
@@ -145,14 +149,14 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                                     }
                                 />
                                 {errors.description && (
-                                    <p className="text-destructive font-semibold">
+                                    <p className="text-sm font-semibold text-destructive">
                                         {errors.description}
                                     </p>
                                 )}
                             </div>
                             <div className="flex flex-col space-y-2">
                                 <div
-                                    className="bg-stone-200 rounded-lg p-4"
+                                    className="p-4 rounded-lg bg-stone-200"
                                     draggable
                                     onDragStart={(e) => {
                                         e.dataTransfer.effectAllowed = "move";
@@ -160,14 +164,18 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                                             "exercise",
                                             JSON.stringify({
                                                 name: "Bicep curls",
-                                            }),
+                                            })
                                         );
                                     }}
                                 >
                                     <h3>Bicep Curls</h3>
                                 </div>
                             </div>
-                            <Button disabled={processing} type="submit">
+                            <Button
+                                disabled={processing}
+                                type="submit"
+                                className="self-start"
+                            >
                                 Save workout plan
                             </Button>
                         </div>

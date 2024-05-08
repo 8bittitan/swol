@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\WorkoutPlan;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,14 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('workout_plans', function (Blueprint $table) {
+        Schema::create('exercises', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description')->nullable();
-            $table->enum('status', \App\Enums\WorkoutPlanStatusEnum::toArray());
-            $table->foreignIdFor(App\Models\User::class)->constrained()->cascadeOnDelete();
-            $table->date('begin_date')->nullable();
-            $table->date('end_date')->nullable();
+            // TODO: Exercise type push/pull/cardio/legs
+            // TODO: Target muscle(s)
+            $table->foreignIdFor(WorkoutPlan::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('workout_plans');
+        Schema::dropIfExists('exercises');
     }
 };

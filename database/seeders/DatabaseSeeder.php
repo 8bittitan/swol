@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\WorkoutPlan;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,6 +20,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        WorkoutPlan::factory()->for($user)->create();
+        WorkoutPlan::factory(3)->for($user)->create();
     }
 }

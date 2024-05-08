@@ -19,7 +19,9 @@ class WorkoutPlanFactory extends Factory
         return [
             'name' => $this->faker->text(10),
             'description' => $this->faker->sentence(),
-            'status' => 'active',
+            'status' => $this->faker->randomElement(['active', 'inactive']),
+            'begin_date' => $this->faker->dateTimeBetween('-2 weeks')->format('Y-m-d'),
+            'end_date' => $this->faker->dateTimeBetween('now', '+3 weeks')->format('Y-m-d'),
         ];
     }
 }
