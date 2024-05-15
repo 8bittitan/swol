@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('reps');
             $table->integer('weight');
             $table->boolean('is_warmup')->default(false);
+            $table->boolean('is_bodyweight')->default(false);
             $table->timestamps();
 
             $table->foreignIdFor(App\Models\User::class)->constrained()->cascadeOnDelete();

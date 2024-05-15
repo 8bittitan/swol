@@ -1,8 +1,14 @@
-import Page from "@/Components/page";
-import PageTitle from "@/Components/page-title";
-import { Button } from "@/Components/ui/button";
-import { Input } from "@/Components/ui/input";
-import { Label } from "@/Components/ui/label";
+import Page from '@/Components/page'
+import PageTitle from '@/Components/page-title'
+import { Button } from '@/Components/ui/button'
+import { Calendar } from '@/Components/ui/calendar'
+import { Input } from '@/Components/ui/input'
+import { Label } from '@/Components/ui/label'
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from '@/Components/ui/popover'
 import {
     Select,
     SelectValue,
@@ -10,37 +16,41 @@ import {
     SelectContent,
     SelectGroup,
     SelectItem,
-} from "@/Components/ui/select";
-import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { PageProps } from "@/types";
-import { useForm } from "@inertiajs/react";
-import { FormEventHandler } from "react";
+} from '@/Components/ui/select'
+import Authenticated from '@/Layouts/AuthenticatedLayout'
+import { PageProps } from '@/types'
+import { useForm } from '@inertiajs/react'
+import { CalendarIcon } from 'lucide-react'
+import { FormEventHandler } from 'react'
 
 type FormInputs = {
-    name: string;
-    description: string;
-    status: string;
+    name: string
+    description: string
+    status: string
     exercises: {
-        name: string;
-    }[];
-};
+        name: string
+    }[]
+    begin_date?: Date
+    end_date?: Date
+}
 
 export default function CreateWorkoutPlanPage({ auth }: PageProps) {
     const { data, setData, post, processing, errors } = useForm<FormInputs>({
-        name: "",
-        description: "",
-        status: "active",
+        name: '',
+        description: '',
+        status: 'active',
         exercises: [],
-    });
+        begin_date: new Date(),
+    })
 
     const handleSubmit: FormEventHandler = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        post(route("plans.store"));
-    };
+        post(route('plans.store'))
+    }
 
     if (Object.keys(errors).length > 0) {
-        console.dir(errors);
+        console.dir(errors)
     }
 
     return (
@@ -60,22 +70,22 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                                 onDragOver={(e) => {
                                     if (
                                         e.dataTransfer.types.includes(
-                                            "exercise"
+                                            'exercise',
                                         )
                                     ) {
-                                        e.preventDefault();
-                                        e.stopPropagation();
+                                        e.preventDefault()
+                                        e.stopPropagation()
                                     }
                                 }}
                                 onDrop={(e) => {
                                     const transfer = JSON.parse(
-                                        e.dataTransfer.getData("exercise")
-                                    );
+                                        e.dataTransfer.getData('exercise'),
+                                    )
 
                                     setData(
-                                        "exercises",
-                                        data.exercises.concat(transfer)
-                                    );
+                                        'exercises',
+                                        data.exercises.concat(transfer),
+                                    )
                                 }}
                             >
                                 {data.exercises.map((exercise, i) => (
@@ -98,7 +108,7 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                                         type="text"
                                         value={data.name}
                                         onChange={(e) =>
-                                            setData("name", e.target.value)
+                                            setData('name', e.target.value)
                                         }
                                     />
                                     {errors.name && (
@@ -112,7 +122,7 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                                     <Select
                                         name="status"
                                         onValueChange={(val) =>
-                                            setData("status", val)
+                                            setData('status', val)
                                         }
                                         value={data.status}
                                     >
@@ -145,7 +155,7 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                                     type="text"
                                     value={data.description}
                                     onChange={(e) =>
-                                        setData("description", e.target.value)
+                                        setData('description', e.target.value)
                                     }
                                 />
                                 {errors.description && (
@@ -154,18 +164,55 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                                     </p>
                                 )}
                             </div>
+                            <div className="flex flex-col space-y-1">
+                                <Label>Plan schedule</Label>
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            id="date"
+                                            variant="outline"
+                                            className="self-start font-normal"
+                                        >
+                                            <CalendarIcon className="mr-2 size-4" />
+                                            <span>Pick a schedule</span>
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent
+                                        className="w-auto p-0"
+                                        align="start"
+                                    >
+                                        <Calendar
+                                            mode="range"
+                                            initialFocus
+                                            defaultMonth={data.begin_date}
+                                            selected={{
+                                                from: data.begin_date,
+                                                to: data.end_date,
+                                            }}
+                                            onSelect={(range) => {
+                                                setData(
+                                                    'begin_date',
+                                                    range?.from,
+                                                )
+                                                setData('end_date', range?.to)
+                                            }}
+                                            numberOfMonths={1}
+                                        />
+                                    </PopoverContent>
+                                </Popover>
+                            </div>
                             <div className="flex flex-col space-y-2">
                                 <div
                                     className="p-4 rounded-lg bg-stone-200"
                                     draggable
                                     onDragStart={(e) => {
-                                        e.dataTransfer.effectAllowed = "move";
+                                        e.dataTransfer.effectAllowed = 'move'
                                         e.dataTransfer.setData(
-                                            "exercise",
+                                            'exercise',
                                             JSON.stringify({
-                                                name: "Bicep curls",
-                                            })
-                                        );
+                                                name: 'Bicep curls',
+                                            }),
+                                        )
                                     }}
                                 >
                                     <h3>Bicep Curls</h3>
@@ -183,5 +230,5 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                 </form>
             </Page>
         </Authenticated>
-    );
+    )
 }

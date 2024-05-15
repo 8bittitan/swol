@@ -8,14 +8,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property int $workout_plan_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\WorkoutPlan $workout_plan
+ *
  * @method static \Database\Factories\ExerciseFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Exercise newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Exercise newQuery()
@@ -25,8 +24,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Exercise whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Exercise whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Exercise whereWorkoutPlanId($value)
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Log> $logs
  * @property-read int|null $logs_count
+ *
  * @mixin \Eloquent
  */
 class Exercise extends Model

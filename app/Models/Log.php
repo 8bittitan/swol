@@ -46,6 +46,7 @@ class Log extends Model
 
     protected $casts = [
         'is_warmup' => 'boolean',
+        'is_bodyweight' => 'boolean',
     ];
 
     public function user(): BelongsTo

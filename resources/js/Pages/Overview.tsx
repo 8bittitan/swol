@@ -1,20 +1,20 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
-import { PageProps } from "@/types";
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
+import { Head, Link } from '@inertiajs/react'
+import { PageProps } from '@/types'
 import {
     Card,
     CardContent,
     CardFooter,
     CardHeader,
     CardTitle,
-} from "@/Components/ui/card";
-import { Plan } from "@/types/plans";
-import { Button } from "@/Components/ui/button";
-import PageTitle from "@/Components/page-title";
+} from '@/Components/ui/card'
+import { Plan } from '@/types/plans'
+import { Button } from '@/Components/ui/button'
+import PageTitle from '@/Components/page-title'
 
 type Props = {
-    plans: Plan[];
-};
+    plans: Plan[]
+}
 
 export default function Overview({ auth, plans }: PageProps<Props>) {
     return (
@@ -25,12 +25,12 @@ export default function Overview({ auth, plans }: PageProps<Props>) {
             <Head title="Dashboard" />
 
             <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div className="mx-auto space-y-4 max-w-7xl sm:px-6 lg:px-8">
                     {plans.map((plan) => (
                         <Card key={plan.id}>
                             <CardHeader>
                                 <CardTitle>
-                                    {plan.name}{" "}
+                                    {plan.name}{' '}
                                     {plan.remaining_weeks && (
                                         <span className="ml-2 text-sm text-gray-500">
                                             {plan.remaining_weeks} weeks
@@ -42,7 +42,7 @@ export default function Overview({ auth, plans }: PageProps<Props>) {
                             <CardContent>{plan.description}</CardContent>
                             <CardFooter>
                                 <Button variant="secondary" asChild>
-                                    <Link href={route("logs.create", plan.id)}>
+                                    <Link href={route('logs.create', plan.id)}>
                                         Log Exercises
                                     </Link>
                                 </Button>
@@ -52,5 +52,5 @@ export default function Overview({ auth, plans }: PageProps<Props>) {
                 </div>
             </div>
         </AuthenticatedLayout>
-    );
+    )
 }

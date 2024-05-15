@@ -1,15 +1,15 @@
-import Page from "@/Components/page";
-import PageTitle from "@/Components/page-title";
-import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { PageProps } from "@/types";
+import Page from '@/Components/page'
+import PageTitle from '@/Components/page-title'
+import Authenticated from '@/Layouts/AuthenticatedLayout'
+import { PageProps } from '@/types'
 
 type Props = {
     workoutPlan: {
-        name: string;
-        description: string;
-        status: string;
-    };
-};
+        name: string
+        description: string
+        status: string
+    }
+}
 
 export default function ShowWorkoutPlanPage({
     auth,
@@ -24,5 +24,5 @@ export default function ShowWorkoutPlanPage({
                 <p>{workoutPlan.description}</p>
             </Page>
         </Authenticated>
-    );
+    )
 }

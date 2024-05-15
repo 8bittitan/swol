@@ -1,25 +1,25 @@
-import PageTitle from "@/Components/page-title";
-import { Button } from "@/Components/ui/button";
-import { Checkbox } from "@/Components/ui/checkbox";
-import { Input } from "@/Components/ui/input";
-import { Label } from "@/Components/ui/label";
+import PageTitle from '@/Components/page-title'
+import { Button } from '@/Components/ui/button'
+import { Checkbox } from '@/Components/ui/checkbox'
+import { Input } from '@/Components/ui/input'
+import { Label } from '@/Components/ui/label'
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/Components/ui/select";
-import Authenticated from "@/Layouts/AuthenticatedLayout";
-import type { Exercise, PageProps } from "@/types";
-import type { Plan } from "@/types/plans";
-import { useForm } from "@inertiajs/react";
-import type { FormEventHandler } from "react";
+} from '@/Components/ui/select'
+import Authenticated from '@/Layouts/AuthenticatedLayout'
+import type { Exercise, PageProps } from '@/types'
+import type { Plan } from '@/types/plans'
+import { useForm } from '@inertiajs/react'
+import type { FormEventHandler } from 'react'
 
 type IndexPageProps = {
-    workout_plan: Plan;
-    exercises: Exercise[];
-};
+    workout_plan: Plan
+    exercises: Exercise[]
+}
 
 export default function WorkoutPlansLogPage({
     auth,
@@ -27,26 +27,28 @@ export default function WorkoutPlansLogPage({
     exercises,
 }: PageProps<IndexPageProps>) {
     const { data, setData, post, processing, errors, reset } = useForm<{
-        exercise_id: number | null;
-        reps: number;
-        weight: number;
-        is_warmup: boolean;
+        exercise_id: number | null
+        reps: number
+        weight: number
+        is_warmup: boolean
+        is_bodyweight: boolean
     }>({
         exercise_id: null,
         reps: 0,
         weight: 0,
         is_warmup: false,
-    });
+        is_bodyweight: false,
+    })
 
     const handleSubmit: FormEventHandler = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        post(route("logs.store", workout_plan.id), {
+        post(route('logs.store', workout_plan.id), {
             onSuccess() {
-                reset();
+                reset()
             },
-        });
-    };
+        })
+    }
 
     return (
         <Authenticated
@@ -67,13 +69,13 @@ export default function WorkoutPlansLogPage({
                     {Object.keys(errors).length > 0 && (
                         <div>{JSON.stringify(errors, null, 2)}</div>
                     )}
-                    <div>
+                    <div className="space-y-2">
                         <Label htmlFor="exercise_id">Exercise</Label>
                         <Select
                             defaultValue={data.exercise_id?.toString()}
                             name="exercise_id"
                             onValueChange={(val) =>
-                                setData("exercise_id", parseInt(val))
+                                setData('exercise_id', parseInt(val))
                             }
                         >
                             <SelectTrigger>
@@ -98,11 +100,11 @@ export default function WorkoutPlansLogPage({
                             name="is_warmup"
                             id="is_warmup"
                             onCheckedChange={(checked) =>
-                                setData("is_warmup", Boolean(checked))
+                                setData('is_warmup', Boolean(checked))
                             }
                         />
                     </div>
-                    <div>
+                    <div className="space-y-2">
                         <Label htmlFor="reps">Reps</Label>
                         <Input
                             defaultValue={data.reps}
@@ -110,11 +112,11 @@ export default function WorkoutPlansLogPage({
                             id="reps"
                             name="reps"
                             onChange={(e) =>
-                                setData("reps", parseInt(e.target.value))
+                                setData('reps', parseInt(e.target.value))
                             }
                         />
                     </div>
-                    <div>
+                    <div className="space-y-2">
                         <Label htmlFor="weight">Weight</Label>
                         <Input
                             defaultValue={data.weight}
@@ -122,12 +124,25 @@ export default function WorkoutPlansLogPage({
                             id="weight"
                             name="weight"
                             onChange={(e) =>
-                                setData("weight", parseInt(e.target.value))
+                                setData('weight', parseInt(e.target.value))
+                            }
+                        />
+                    </div>
+                    <div className="flex flex-col space-y-2">
+                        <Label htmlFor="is_bodyweight">
+                            Using body weight?
+                        </Label>
+                        <Checkbox
+                            defaultChecked={data.is_bodyweight}
+                            name="is_bodyweight"
+                            id="is_bodyweight"
+                            onCheckedChange={(checked) =>
+                                setData('is_bodyweight', Boolean(checked))
                             }
                         />
                     </div>
                 </div>
             </form>
         </Authenticated>
-    );
+    )
 }

@@ -23,9 +23,10 @@ class CreateLogRequest extends FormRequest
     {
         return [
             'reps' => ['integer', 'required'],
-            'weight' => ['integer', 'required'],
+            'weight' => ['integer', 'required_if:is_bodyweight,false'],
             'exercise_id' => ['integer', 'required'],
             'is_warmup' => ['boolean', 'nullable'],
+            'is_bodyweight' => ['boolean', 'nullable'],
         ];
     }
 }

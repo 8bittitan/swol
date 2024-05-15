@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string|null $description
@@ -23,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Exercise> $exercises
  * @property-read int|null $exercises_count
  * @property-read \App\Models\User $user
+ *
  * @method static \Database\Factories\WorkoutPlanFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|WorkoutPlan newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|WorkoutPlan newQuery()
@@ -34,13 +33,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|WorkoutPlan whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|WorkoutPlan whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|WorkoutPlan whereUserId($value)
+ *
  * @property string|null $begin_date
  * @property string|null $end_date
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|WorkoutPlan whereBeginDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|WorkoutPlan whereEndDate($value)
+ *
  * @property-read mixed $remaining_weeks
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Log> $logs
  * @property-read int|null $logs_count
+ *
  * @mixin \Eloquent
  */
 class WorkoutPlan extends Model
