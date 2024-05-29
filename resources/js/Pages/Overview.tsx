@@ -40,7 +40,12 @@ export default function Overview({ auth, plans }: PageProps<Props>) {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>{plan.description}</CardContent>
-                            <CardFooter>
+                            <CardFooter className="flex gap-2">
+                                <Button asChild>
+                                    <Link href={route('plans.show', plan.id)}>
+                                        View Plan
+                                    </Link>
+                                </Button>
                                 <Button variant="secondary" asChild>
                                     <Link href={route('logs.create', plan.id)}>
                                         Log Exercises

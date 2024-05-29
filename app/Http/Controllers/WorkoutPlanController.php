@@ -35,8 +35,18 @@ class WorkoutPlanController extends Controller
 
     public function show(int $workoutPlanId, Request $request): Response
     {
-        $workoutPlan = WorkoutPlan::whereUserId($request->user()->id)->whereId($workoutPlanId)->first();
+        $workoutPlan = WorkoutPlan::where([
+            'user_id' => $request->user()->id,
+            'id' => $workoutPlanId,
+        ])->with('exercises')->first();
 
-        return Inertia::render('WorkoutPlans/Show', ['workoutPlan' => $workoutPlan]);
+        if (! $workoutPlan) {
+            return redirect(route('plans.index'));
+        }
+
+        return Inertia::render('WorkoutPlans/Show', [
+            'workoutPlan' => $workoutPlan,
+            'exercises' => $workoutPlan->exercises,
+        ]);
     }
 }

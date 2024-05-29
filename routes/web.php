@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ExerciseLogApiController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\OverviewController;
 use App\Http\Controllers\ProfileController;
@@ -30,6 +31,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/plans/{workoutPlan}/log', [LogController::class, 'create'])->name('logs.create');
     Route::post('/plans/{workoutPlan}/log', [LogController::class, 'store'])->name('logs.store');
+
+    Route::prefix('api')->group(function () {
+        Route::get('/plans/{workoutPlan}/{exercise}/logs', [ExerciseLogApiController::class, 'show'])->name('api.logs.show');
+    });
 });
 
 require __DIR__.'/auth.php';

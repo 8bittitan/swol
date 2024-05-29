@@ -22,6 +22,7 @@ import { PageProps } from '@/types'
 import { useForm } from '@inertiajs/react'
 import { CalendarIcon } from 'lucide-react'
 import { FormEventHandler } from 'react'
+import { ExerciseList } from '@/Components/workout-plan/exercise-list'
 
 type FormInputs = {
     name: string
@@ -61,43 +62,10 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
             <Page>
                 <form onSubmit={handleSubmit}>
                     <div className="grid grid-cols-[500px,1fr] gap-4">
-                        <div>
-                            <h4 className="mb-2 text-lg font-bold">
-                                Exercises for plan
-                            </h4>
-                            <div
-                                className="flex flex-col flex-1 min-h-full space-y-4 border border-dashed rounded-lg"
-                                onDragOver={(e) => {
-                                    if (
-                                        e.dataTransfer.types.includes(
-                                            'exercise',
-                                        )
-                                    ) {
-                                        e.preventDefault()
-                                        e.stopPropagation()
-                                    }
-                                }}
-                                onDrop={(e) => {
-                                    const transfer = JSON.parse(
-                                        e.dataTransfer.getData('exercise'),
-                                    )
-
-                                    setData(
-                                        'exercises',
-                                        data.exercises.concat(transfer),
-                                    )
-                                }}
-                            >
-                                {data.exercises.map((exercise, i) => (
-                                    <div
-                                        key={i}
-                                        className="p-4 rounded-lg bg-stone-200"
-                                    >
-                                        {exercise.name}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+                        <ExerciseList
+                            exercises={data.exercises}
+                            setData={setData}
+                        />
                         <div className="flex flex-col space-y-4">
                             <div className="flex w-full space-x-4">
                                 <div className="flex flex-col flex-1 space-y-1">
@@ -203,7 +171,7 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                             </div>
                             <div className="flex flex-col space-y-2">
                                 <div
-                                    className="p-4 rounded-lg bg-stone-200"
+                                    className="p-4 rounded-lg bg-card"
                                     draggable
                                     onDragStart={(e) => {
                                         e.dataTransfer.effectAllowed = 'move'
@@ -215,7 +183,43 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                                         )
                                     }}
                                 >
-                                    <h3>Bicep Curls</h3>
+                                    <h3 className="text-card-foreground">
+                                        Bicep Curls
+                                    </h3>
+                                </div>
+                                <div
+                                    className="p-4 rounded-lg bg-card"
+                                    draggable
+                                    onDragStart={(e) => {
+                                        e.dataTransfer.effectAllowed = 'move'
+                                        e.dataTransfer.setData(
+                                            'exercise',
+                                            JSON.stringify({
+                                                name: 'Chest Press',
+                                            }),
+                                        )
+                                    }}
+                                >
+                                    <h3 className="text-card-foreground">
+                                        Chest Press
+                                    </h3>
+                                </div>
+                                <div
+                                    className="p-4 rounded-lg bg-card"
+                                    draggable
+                                    onDragStart={(e) => {
+                                        e.dataTransfer.effectAllowed = 'move'
+                                        e.dataTransfer.setData(
+                                            'exercise',
+                                            JSON.stringify({
+                                                name: 'Squats',
+                                            }),
+                                        )
+                                    }}
+                                >
+                                    <h3 className="text-card-foreground">
+                                        Squats
+                                    </h3>
                                 </div>
                             </div>
                             <Button
