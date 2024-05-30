@@ -2,31 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\WorkoutPlanStatusEnum;
-use App\Models\WorkoutPlan;
+use App\Enums\RoutineStatusEnum;
+use App\Models\Routine;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class OverviewController extends Controller
 {
-    public function index()
+    public function index(): Response
     {
-        $plans = WorkoutPlan::whereUserId(auth()->id())
-            ->whereStatus(WorkoutPlanStatusEnum::ACTIVE)
+        $routines = Routine::whereUserId(auth()->id())
+            ->whereStatus(RoutineStatusEnum::ACTIVE)
             ->get()
-            ->map(function ($plan) {
+            ->map(function ($routine) {
                 return [
-                    'id' => $plan->id,
-                    'name' => $plan->name,
-                    'description' => $plan->description,
-                    'status' => $plan->status,
-                    'begin_date' => $plan->begin_date,
-                    'end_date' => $plan->end_date,
-                    'remaining_weeks' => $plan->remaining_weeks,
+                    'id' => $routine->id,
+                    'name' => $routine->name,
+                    'description' => $routine->description,
+                    'status' => $routine->status,
+                    'begin_date' => $routine->begin_date,
+                    'end_date' => $routine->end_date,
+                    'remaining_weeks' => $routine->remaining_weeks,
                 ];
             });
 
         return Inertia::render('Overview', [
-            'plans' => $plans,
+            'routines' => $routines,
         ]);
     }
 }

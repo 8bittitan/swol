@@ -11,23 +11,24 @@ import {
     DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu'
 import Authenticated from '@/Layouts/AuthenticatedLayout'
-import { Exercise, PageProps, Plan } from '@/types'
+import { Exercise, PageProps, Routine } from '@/types'
 import { useLogs } from '@/lib/logs'
 import { formatLogsForChart } from '@/lib/logs'
 import { LogsChart } from '@/Components/logs-chart'
+import { Skeleton } from '@/Components/ui/skeleton'
 
 type Props = {
-    workoutPlan: Plan
+    routine: Routine
     exercises: Exercise[]
 }
 
-export default function ShowWorkoutPlanPage({
+export default function RoutineShowPage({
     auth,
-    workoutPlan,
+    routine,
     exercises,
 }: PageProps<Props>) {
-    const [selectedExerise, setSelectedExercise] = useState(exercises[0])
-    const { isLoading, data } = useLogs(workoutPlan, selectedExerise)
+    const [selectedExercise, setSelectedExercise] = useState(exercises[0])
+    const { isLoading, data } = useLogs(routine, selectedExercise)
 
     const logs = useMemo(() => {
         if (!data) return null
@@ -38,16 +39,16 @@ export default function ShowWorkoutPlanPage({
     return (
         <Authenticated
             user={auth.user}
-            header={<PageTitle>{workoutPlan.name}</PageTitle>}
+            header={<PageTitle>{routine.name}</PageTitle>}
         >
             <Page>
-                <p>{workoutPlan.description}</p>
+                <p>{routine.description}</p>
                 <div className="space-y-4">
                     <div className="flex justify-end">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="secondary">
-                                    {selectedExerise.name}
+                                    {selectedExercise.name}
                                     <ChevronDown className="ml-2 size-5" />
                                 </Button>
                             </DropdownMenuTrigger>
@@ -67,7 +68,7 @@ export default function ShowWorkoutPlanPage({
                     </div>
                     <div>
                         {isLoading ? (
-                            <p>Loading...</p>
+                            <Skeleton className="w-full h-[400px]" />
                         ) : !logs || logs.length < 1 ? (
                             <p>No logs found for this exercise.</p>
                         ) : (

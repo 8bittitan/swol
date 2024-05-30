@@ -105,6 +105,14 @@ export default function Login({
                     </Button>
                 </div>
             </form>
+
+            <div>
+                <Button variant="outline" asChild className="w-full">
+                    <a href={route('oauth.redirect', { provider: 'github' })}>
+                        Login with GitHub
+                    </a>
+                </Button>
+            </div>
         </GuestLayout>
     )
 }

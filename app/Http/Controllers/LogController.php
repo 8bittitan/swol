@@ -3,23 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\WorkoutPlan\CreateLogRequest;
-use App\Models\WorkoutPlan;
+use App\Models\Routine;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class LogController extends Controller
 {
-    public function create(WorkoutPlan $workoutPlan): Response
+    public function create(Routine $routine): Response
     {
-        $exercises = $workoutPlan->exercises;
+        $exercises = $routine->exercises;
 
-        return Inertia::render('WorkoutPlans/Log', ['workout_plan' => $workoutPlan, 'exercises' => $exercises]);
+        return Inertia::render('Routine/Log', ['routine' => $routine, 'exercises' => $exercises]);
     }
 
-    public function store(WorkoutPlan $workoutPlan, CreateLogRequest $request): RedirectResponse
+    public function store(Routine $routine, CreateLogRequest $request): RedirectResponse
     {
-        $workoutPlan->logs()->create([
+        $routine->logs()->create([
             'user_id' => auth()->id(),
             'reps' => $request->get('reps'),
             'weight' => $request->get('weight'),
@@ -27,6 +27,6 @@ class LogController extends Controller
             'is_warmup' => $request->get('is_warmup', false),
         ]);
 
-        return redirect()->route('logs.create', $workoutPlan->id);
+        return redirect()->route('logs.create', $routine->id);
     }
 }

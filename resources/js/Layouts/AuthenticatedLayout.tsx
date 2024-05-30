@@ -44,13 +44,14 @@ export default function Authenticated({
                                     Overview
                                 </NavLink>
                                 <NavLink
-                                    href={route('plans.index')}
+                                    href={route('routines.index')}
                                     active={
-                                        route().current()?.includes('plans') ??
-                                        false
+                                        route()
+                                            .current()
+                                            ?.includes('routines') ?? false
                                     }
                                 >
-                                    Plans
+                                    Routines
                                 </NavLink>
                             </div>
                         </div>
@@ -60,7 +61,7 @@ export default function Authenticated({
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <Button variant="outline">
-                                            {user.name}{' '}
+                                            {user.username || user.email}
                                             <ChevronDown className="ml-2 size-4" />
                                         </Button>
                                     </DropdownMenuTrigger>
@@ -148,12 +149,12 @@ export default function Authenticated({
                             Overview
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            href={route('plans.index')}
+                            href={route('routines.index')}
                             active={
-                                route().current()?.includes('plans') ?? false
+                                route().current()?.includes('routines') ?? false
                             }
                         >
-                            Plans
+                            Routines
                         </ResponsiveNavLink>
                     </div>
 

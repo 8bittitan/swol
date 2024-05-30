@@ -5,17 +5,18 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Log;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ExerciseLogApiController extends Controller
 {
-    public function show(Request $request, int $workoutPlanId, int $exerciseId)
+    public function show(Request $request, int $routineId, int $exerciseId): JsonResponse
     {
         $logs = Log::orderBy('created_at')
             ->where([
                 'user_id' => $request->user()->id,
-                'workout_plan_id' => $workoutPlanId,
+                'routine_id' => $routineId,
                 'exercise_id' => $exerciseId,
             ])
             ->whereBetween('created_at', [

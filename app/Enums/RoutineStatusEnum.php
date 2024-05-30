@@ -2,13 +2,13 @@
 
 namespace App\Enums;
 
-enum WorkoutPlanStatusEnum: string
+enum RoutineStatusEnum: string
 {
     case ACTIVE = 'active';
     case INACTIVE = 'inactive';
 
     public static function toArray(): array
     {
-        return array_column(WorkoutPlanStatusEnum::cases(), 'value');
+        return array_column(RoutineStatusEnum::cases(), 'value');
     }
 }

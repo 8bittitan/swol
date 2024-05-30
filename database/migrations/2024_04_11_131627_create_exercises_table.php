@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\WorkoutPlan;
+use App\Models\Routine;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             // TODO: Exercise type push/pull/cardio/legs
             // TODO: Target muscle(s)
-            $table->foreignIdFor(WorkoutPlan::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Routine::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

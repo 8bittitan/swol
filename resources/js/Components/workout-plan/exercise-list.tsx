@@ -19,7 +19,7 @@ export function ExerciseList({ exercises, setData }: Props) {
 
     return (
         <div>
-            <h4 className="mb-2 text-lg font-bold">Exercises for plan</h4>
+            <h4 className="mb-2 text-lg font-bold">Exercises for routine</h4>
             <div
                 className={cn(
                     'flex flex-col flex-1 min-h-full space-y-4 border border-dashed border-muted rounded-lg',

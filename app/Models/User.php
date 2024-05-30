@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
+ *
+ *
  * @property int $id
  * @property string $name
  * @property string $email
@@ -19,9 +21,8 @@ use Illuminate\Notifications\Notifiable;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\WorkoutPlan> $workout_plans
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Routine> $workout_plans
  * @property-read int|null $workout_plans_count
- *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
@@ -34,7 +35,16 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
- *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Provider> $providers
+ * @property-read int|null $providers_count
+ * @property string|null $username
+ * @property string|null $avatar
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereAvatar($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereUsername($value)
+ * @property string $github_id
+ * @property string $github_token
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereGithubId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereGithubToken($value)
  * @mixin \Eloquent
  */
 class User extends Authenticatable
@@ -47,9 +57,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'username',
+        'avatar',
         'email',
         'password',
+        'github_id',
+        'github_token'
     ];
 
     /**
@@ -75,8 +88,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function workout_plans(): HasMany
+    public function routines(): HasMany
     {
-        return $this->hasMany(WorkoutPlan::class);
+        return $this->hasMany(Routine::class);
     }
 }

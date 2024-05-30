@@ -35,7 +35,7 @@ type FormInputs = {
     end_date?: Date
 }
 
-export default function CreateWorkoutPlanPage({ auth }: PageProps) {
+export default function CreateRoutinePage({ auth }: PageProps) {
     const { data, setData, post, processing, errors } = useForm<FormInputs>({
         name: '',
         description: '',
@@ -47,7 +47,7 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
     const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault()
 
-        post(route('plans.store'))
+        post(route('routines.store'))
     }
 
     if (Object.keys(errors).length > 0) {
@@ -57,7 +57,7 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
     return (
         <Authenticated
             user={auth.user}
-            header={<PageTitle>Create a new workout plan</PageTitle>}
+            header={<PageTitle>Create a new routine</PageTitle>}
         >
             <Page>
                 <form onSubmit={handleSubmit}>
@@ -69,7 +69,7 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                         <div className="flex flex-col space-y-4">
                             <div className="flex w-full space-x-4">
                                 <div className="flex flex-col flex-1 space-y-1">
-                                    <Label htmlFor="name">Plan name</Label>
+                                    <Label htmlFor="name">Routine Name</Label>
                                     <Input
                                         id="name"
                                         name="name"
@@ -86,7 +86,9 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                                     )}
                                 </div>
                                 <div className="flex flex-col flex-1 space-y-1">
-                                    <Label htmlFor="status">Plan status</Label>
+                                    <Label htmlFor="status">
+                                        Routine Status
+                                    </Label>
                                     <Select
                                         name="status"
                                         onValueChange={(val) =>
@@ -116,7 +118,9 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                                 </div>
                             </div>
                             <div className="flex flex-col space-y-1">
-                                <Label htmlFor="description">Description</Label>
+                                <Label htmlFor="description">
+                                    Routine Description
+                                </Label>
                                 <Input
                                     id="description"
                                     name="description"
@@ -133,7 +137,7 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                                 )}
                             </div>
                             <div className="flex flex-col space-y-1">
-                                <Label>Plan schedule</Label>
+                                <Label>Routine Schedule</Label>
                                 <Popover>
                                     <PopoverTrigger asChild>
                                         <Button
@@ -227,7 +231,7 @@ export default function CreateWorkoutPlanPage({ auth }: PageProps) {
                                 type="submit"
                                 className="self-start"
                             >
-                                Save workout plan
+                                Save routine
                             </Button>
                         </div>
                     </div>

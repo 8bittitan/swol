@@ -11,19 +11,19 @@ import {
     SelectValue,
 } from '@/Components/ui/select'
 import Authenticated from '@/Layouts/AuthenticatedLayout'
-import type { Exercise, PageProps } from '@/types'
+import type { Exercise, PageProps, Routine } from '@/types'
 import type { Plan } from '@/types/plans'
 import { useForm } from '@inertiajs/react'
 import type { FormEventHandler } from 'react'
 
 type IndexPageProps = {
-    workout_plan: Plan
+    routine: Routine
     exercises: Exercise[]
 }
 
-export default function WorkoutPlansLogPage({
+export default function RoutineLogPage({
     auth,
-    workout_plan,
+    routine,
     exercises,
 }: PageProps<IndexPageProps>) {
     const { data, setData, post, processing, errors, reset } = useForm<{
@@ -43,7 +43,7 @@ export default function WorkoutPlansLogPage({
     const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault()
 
-        post(route('logs.store', workout_plan.id), {
+        post(route('logs.store', routine.id), {
             onSuccess() {
                 reset()
             },
@@ -53,7 +53,7 @@ export default function WorkoutPlansLogPage({
     return (
         <Authenticated
             user={auth.user}
-            header={<PageTitle>{workout_plan.name} Log</PageTitle>}
+            header={<PageTitle>{routine.name} Log</PageTitle>}
         >
             <form
                 onSubmit={handleSubmit}

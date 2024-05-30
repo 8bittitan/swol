@@ -13,37 +13,40 @@ import { Plan } from '@/types/plans'
 import { Link } from '@inertiajs/react'
 
 type IndexPageProps = {
-    workoutPlans: Plan[]
+    routines: Plan[]
 }
 
-export default function WorkoutPlansIndexPage({
+export default function RoutineIndexPage({
     auth,
-    workoutPlans,
+    routines,
 }: PageProps<IndexPageProps>) {
     return (
-        <Authenticated user={auth.user} header={<PageTitle>Plans</PageTitle>}>
+        <Authenticated
+            user={auth.user}
+            header={<PageTitle>Routines</PageTitle>}
+        >
             <div className="px-4 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div className="flex items-center justify-end mb-8">
                     <Button asChild>
-                        <Link href={route('plans.create')}>
+                        <Link href={route('routines.create')}>
                             Create a new plan
                         </Link>
                     </Button>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                    {workoutPlans.map((plan) => (
-                        <Card key={plan.id}>
+                    {routines.map((routine) => (
+                        <Card key={routine.id}>
                             <CardHeader>
-                                <CardTitle>{plan.name}</CardTitle>
-                                {plan.description && (
+                                <CardTitle>{routine.name}</CardTitle>
+                                {routine.description && (
                                     <CardDescription>
-                                        {plan.description}
+                                        {routine.description}
                                     </CardDescription>
                                 )}
                             </CardHeader>
                             <CardContent>
-                                <span>{plan.status}</span>
+                                <span>{routine.status}</span>
                             </CardContent>
                         </Card>
                     ))}

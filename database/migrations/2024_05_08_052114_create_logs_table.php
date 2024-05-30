@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreignIdFor(App\Models\User::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(App\Models\WorkoutPlan::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(App\Models\Routine::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(App\Models\Exercise::class)->constrained();
         });
     }

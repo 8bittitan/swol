@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('workout_plans', function (Blueprint $table) {
+        Schema::create('routines', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->enum('status', \App\Enums\WorkoutPlanStatusEnum::toArray());
+            $table->enum('status', \App\Enums\RoutineStatusEnum::toArray());
             $table->foreignIdFor(App\Models\User::class)->constrained()->cascadeOnDelete();
             $table->date('begin_date')->nullable();
             $table->date('end_date')->nullable();
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('workout_plans');
+        Schema::dropIfExists('routines');
     }
 };

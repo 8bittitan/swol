@@ -1,15 +1,15 @@
-import { Exercise, Log, Plan } from '@/types'
+import { Exercise, Log, Routine } from '@/types'
 import { format } from 'date-fns'
 import { useQuery } from '@tanstack/react-query'
 
-export function useLogs(workoutPlan: Plan, exercise: Exercise) {
+export function useLogs(routine: Routine, exercise: Exercise) {
     const { isLoading, data } = useQuery<{ data: Log[] }>({
-        queryKey: ['logs', workoutPlan.id, exercise.id],
+        queryKey: ['logs', routine.id, exercise.id],
         queryFn: async () => {
             const res = await fetch(
                 route('api.logs.show', {
-                    workoutPlan: workoutPlan,
-                    exercise: exercise,
+                    routineId: routine.id,
+                    exerciseId: exercise.id,
                 }),
                 {
                     headers: {

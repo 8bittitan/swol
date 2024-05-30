@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\WorkoutPlan;
 
-use App\Enums\WorkoutPlanStatusEnum;
+use App\Enums\RoutineStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -26,7 +26,7 @@ class CreateWorkoutPlanRequest extends FormRequest
         return [
             'name' => ['string', 'required'],
             'description' => ['string'],
-            'status' => ['string', Rule::enum(WorkoutPlanStatusEnum::class)],
+            'status' => ['string', Rule::enum(RoutineStatusEnum::class)],
             'exercises' => ['required', 'array'],
             'exercises.*' => ['required', 'array:name'],
             'exercises.*.name' => ['string', 'required'],
