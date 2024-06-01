@@ -22,7 +22,7 @@ export default function Overview({ auth, routines }: PageProps<Props>) {
             user={auth.user}
             header={<PageTitle>Overview</PageTitle>}
         >
-            <Head title="Dashboard" />
+            <Head title="Overview" />
 
             <div className="py-12">
                 <div className="mx-auto space-y-4 max-w-7xl sm:px-6 lg:px-8">

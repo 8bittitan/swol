@@ -41,7 +41,8 @@ export default function CreateRoutinePage({ auth }: PageProps) {
         description: '',
         status: 'active',
         exercises: [],
-        begin_date: new Date(),
+        begin_date: undefined,
+        end_date: undefined,
     })
 
     const handleSubmit: FormEventHandler = (e) => {
@@ -162,11 +163,13 @@ export default function CreateRoutinePage({ auth }: PageProps) {
                                                 to: data.end_date,
                                             }}
                                             onSelect={(range) => {
+                                                if (!range) return
+
                                                 setData(
                                                     'begin_date',
-                                                    range?.from,
+                                                    range.from,
                                                 )
-                                                setData('end_date', range?.to)
+                                                setData('end_date', range.to)
                                             }}
                                             numberOfMonths={1}
                                         />

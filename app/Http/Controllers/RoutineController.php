@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\WorkoutPlan\CreateWorkoutPlanRequest;
+use App\Http\Requests\Routine\CreateRoutineRequest;
 use App\Models\Routine;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,12 +23,12 @@ class RoutineController extends Controller
         return Inertia::render('Routine/Create');
     }
 
-    public function store(CreateWorkoutPlanRequest $request): RedirectResponse
+    public function store(CreateRoutineRequest $request): RedirectResponse
     {
-        $planData = $request->safe()->only(['name', 'description', 'status']);
+        $routineData = $request->safe()->only(['name', 'description', 'status', 'start_date', 'end_date']);
         $exercises = $request->safe()->only(['exercises']);
 
-        $routine = $request->user()->routines()->create($planData);
+        $routine = $request->user()->routines()->create($routineData);
         $routine->exercises()->createMany($exercises['exercises']);
 
         return redirect(route('routines.index'));

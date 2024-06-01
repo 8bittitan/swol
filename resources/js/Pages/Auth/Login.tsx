@@ -6,6 +6,13 @@ import { Label } from '@/Components/ui/label'
 import { Input } from '@/Components/ui/input'
 import { Button } from '@/Components/ui/button'
 import { Checkbox } from '@/Components/ui/checkbox'
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/Components/ui/card'
 
 export default function Login({
     status,
@@ -17,7 +24,7 @@ export default function Login({
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
-        remember: false,
+        remember: true,
     })
 
     useEffect(() => {
@@ -33,86 +40,98 @@ export default function Login({
     }
 
     return (
-        <GuestLayout title="Log in">
+        <GuestLayout>
             <Head title="Log in" />
-
-            {status && (
-                <div className="mb-4 text-sm font-medium text-green-600">
-                    {status}
-                </div>
-            )}
-
-            <form onSubmit={submit}>
-                <div className="space-y-1">
-                    <Label htmlFor="email">Email</Label>
-
-                    <Input
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        autoComplete="username"
-                        autoFocus
-                        onChange={(e) => setData('email', e.target.value)}
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4 space-y-1">
-                    <Label htmlFor="password">Password</Label>
-
-                    <Input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={data.password}
-                        autoComplete="current-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="block mt-4">
-                    <label className="flex items-center">
-                        <Checkbox
-                            id="remember"
-                            name="remember"
-                            checked={data.remember}
-                            onCheckedChange={(checked) =>
-                                setData('remember', Boolean(checked))
-                            }
-                        />
-                        <Label htmlFor="remember" className="ml-2">
-                            Remember me
-                        </Label>
-                    </label>
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="text-sm underline rounded-md text-foreground focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            <Card className="mx-auto max-w-sm">
+                <CardHeader>
+                    <CardTitle className="text-2xl">Login</CardTitle>
+                    <CardDescription>
+                        Enter your email below to login to your account
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <form className="grid gap-4" onSubmit={submit}>
+                        {status && (
+                            <div className="mb-4 text-sm font-medium text-green-600">
+                                {status}
+                            </div>
+                        )}
+                        <div className="grid gap-2">
+                            <Label htmlFor="email">Email</Label>
+                            <Input
+                                id="email"
+                                type="email"
+                                placeholder="m@example.com"
+                                required
+                                name="email"
+                                value={data.email}
+                                autoComplete="username"
+                                autoFocus
+                                onChange={(e) =>
+                                    setData('email', e.target.value)
+                                }
+                            />
+                            <InputError
+                                message={errors.email}
+                                className="mt-2"
+                            />
+                        </div>
+                        <div className="grid gap-2">
+                            <div className="flex items-center">
+                                <Label htmlFor="password">Password</Label>
+                                <Link
+                                    href={route('password.request')}
+                                    className="ml-auto inline-block text-sm underline"
+                                >
+                                    Forgot your password?
+                                </Link>
+                            </div>
+                            <Input
+                                type="password"
+                                id="password"
+                                name="password"
+                                required
+                                value={data.password}
+                                autoComplete="current-password"
+                                onChange={(e) =>
+                                    setData('password', e.target.value)
+                                }
+                            />
+                            <InputError
+                                message={errors.password}
+                                className="mt-2"
+                            />
+                        </div>
+                        <Button
+                            type="submit"
+                            className="w-full"
+                            disabled={processing}
                         >
-                            Forgot your password?
+                            Login
+                        </Button>
+                        <Button
+                            variant="outline"
+                            className="w-full"
+                            asChild
+                            disabled={processing}
+                        >
+                            <a
+                                href={route('oauth.redirect', {
+                                    provider: 'github',
+                                })}
+                            >
+                                Login with GitHub
+                            </a>
+                        </Button>
+                    </form>
+                    <div className="mt-4 text-center text-sm">
+                        Don&apos;t have an account?{' '}
+                        <Link href={route('register')} className="underline">
+                            Sign up
                         </Link>
-                    )}
-
-                    <Button className="ml-4" disabled={processing}>
-                        Log in
-                    </Button>
-                </div>
-            </form>
-
-            <div>
-                <Button variant="outline" asChild className="w-full">
-                    <a href={route('oauth.redirect', { provider: 'github' })}>
-                        Login with GitHub
-                    </a>
-                </Button>
-            </div>
+                    </div>
+                </CardContent>
+            </Card>
         </GuestLayout>
     )
 }

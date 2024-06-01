@@ -22,6 +22,7 @@
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.0",
         "fakerphp/faker": "^1.23",
+        "fly-apps/dockerfile-laravel": "^1.0",
         "laravel/pint": "^1.15",
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
@@ -59,6 +60,9 @@
             "@php artisan key:generate --ansi",
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
+        ],
+        "deploy": [
+            "fly deploy --remote-only"
         ]
     },
     "extra": {

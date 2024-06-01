@@ -29,7 +29,7 @@ export default function RoutineIndexPage({
                 <div className="flex items-center justify-end mb-8">
                     <Button asChild>
                         <Link href={route('routines.create')}>
-                            Create a new plan
+                            Create a new routine
                         </Link>
                     </Button>
                 </div>

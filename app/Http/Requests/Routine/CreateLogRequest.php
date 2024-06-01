@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\WorkoutPlan;
+namespace App\Http\Requests\Routine;
 
 use Illuminate\Foundation\Http\FormRequest;
 

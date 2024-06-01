@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\WorkoutPlan\CreateLogRequest;
+use App\Http\Requests\Routine\CreateLogRequest;
 use App\Models\Routine;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;

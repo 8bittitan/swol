@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Requests\WorkoutPlan;
+namespace App\Http\Requests\Routine;
 
 use App\Enums\RoutineStatusEnum;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CreateWorkoutPlanRequest extends FormRequest
+class CreateRoutineRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +20,7 @@ class CreateWorkoutPlanRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
@@ -27,6 +28,8 @@ class CreateWorkoutPlanRequest extends FormRequest
             'name' => ['string', 'required'],
             'description' => ['string'],
             'status' => ['string', Rule::enum(RoutineStatusEnum::class)],
+            'begin_date' => ['date'],
+            'end_date' => ['date', 'after:begin_date'],
             'exercises' => ['required', 'array'],
             'exercises.*' => ['required', 'array:name'],
             'exercises.*.name' => ['string', 'required'],
