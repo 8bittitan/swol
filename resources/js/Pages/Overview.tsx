@@ -1,19 +1,11 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
-import { Head, Link } from '@inertiajs/react'
-import { PageProps } from '@/types'
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from '@/Components/ui/card'
-import { Plan } from '@/types/plans'
-import { Button } from '@/Components/ui/button'
+import { Head } from '@inertiajs/react'
+import { PageProps, Routine as IRoutine } from '@/types'
 import PageTitle from '@/Components/page-title'
+import Routine from '@/Components/overview/routine'
 
 type Props = {
-    routines: Plan[]
+    routines: IRoutine[]
 }
 
 export default function Overview({ auth, routines }: PageProps<Props>) {
@@ -27,39 +19,7 @@ export default function Overview({ auth, routines }: PageProps<Props>) {
             <div className="py-12">
                 <div className="mx-auto space-y-4 max-w-7xl sm:px-6 lg:px-8">
                     {routines.map((routine) => (
-                        <Card key={routine.id}>
-                            <CardHeader>
-                                <CardTitle>
-                                    {routine.name}{' '}
-                                    {routine.remaining_weeks && (
-                                        <span className="ml-2 text-sm text-gray-500">
-                                            {routine.remaining_weeks} weeks
-                                            remaining
-                                        </span>
-                                    )}
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent>{routine.description}</CardContent>
-                            <CardFooter className="flex gap-2">
-                                <Button asChild>
-                                    <Link
-                                        href={route(
-                                            'routines.show',
-                                            routine.id,
-                                        )}
-                                    >
-                                        View Plan
-                                    </Link>
-                                </Button>
-                                <Button variant="secondary" asChild>
-                                    <Link
-                                        href={route('logs.create', routine.id)}
-                                    >
-                                        Log Exercises
-                                    </Link>
-                                </Button>
-                            </CardFooter>
-                        </Card>
+                        <Routine key={routine.id} routine={routine} />
                     ))}
                 </div>
             </div>

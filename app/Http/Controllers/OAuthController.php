@@ -26,7 +26,7 @@ class OAuthController extends Controller
             'avatar' => $oauth_user->getAvatar(),
             'github_id' => $oauth_user->getId(),
             'github_token' => $oauth_user->token,
-            'email' => $oauth_user->getEmail()
+            'email' => $oauth_user->getEmail(),
         ]);
 
         Auth::login($user);

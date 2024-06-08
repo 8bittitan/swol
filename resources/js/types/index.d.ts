@@ -20,7 +20,13 @@ export interface Routine {
 export interface Exercise {
     id: number
     name: string
-    workout_plan_id: number
+    force: string
+    category: string
+    equipment: string
+    primary_muscles: string
+    complexity: string
+    created_at: string
+    updated_at: string
 }
 
 export interface Log {

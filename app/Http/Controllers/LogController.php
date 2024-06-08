@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\GetRoutingExercisesAction;
 use App\Http\Requests\Routine\CreateLogRequest;
 use App\Models\Routine;
 use Illuminate\Http\RedirectResponse;
@@ -10,9 +11,15 @@ use Inertia\Response;
 
 class LogController extends Controller
 {
+    public function __construct(protected GetRoutingExercisesAction $getRoutingExercisesAction)
+    {
+    }
+
     public function create(Routine $routine): Response
     {
-        $exercises = $routine->exercises;
+        $userId = auth()->id();
+
+        $exercises = $this->getRoutingExercisesAction->handle($routine, $userId);
 
         return Inertia::render('Routine/Log', ['routine' => $routine, 'exercises' => $exercises]);
     }

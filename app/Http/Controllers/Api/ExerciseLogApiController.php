@@ -21,7 +21,7 @@ class ExerciseLogApiController extends Controller
             ])
             ->whereBetween('created_at', [
                 Carbon::today()->subWeek(),
-                Carbon::today()->endOfDay()
+                Carbon::today()->endOfDay(),
             ])
             ->select('*', DB::raw('DATE(created_at) as created_at'), DB::raw('MAX(weight) as weight'))
             ->groupBy(DB::raw('DATE(created_at)'))

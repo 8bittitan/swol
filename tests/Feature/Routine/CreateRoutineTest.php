@@ -29,13 +29,13 @@ it('should allow user to create a routine', function () {
                 'name' => 'Bench Press',
             ],
         ],
-     ]);
+    ]);
 
     $response->assertRedirect(route('routines.index'));
 });
 
 it('should allow user to create a routine with a schedule', function () {
-        $response = $this->actingAs(User::factory()->create())->post(route('routines.store'), [
+    $response = $this->actingAs(User::factory()->create())->post(route('routines.store'), [
         'name' => 'Test Routine',
         'description' => 'Test Routine Description',
         'status' => 'active',
@@ -49,7 +49,7 @@ it('should allow user to create a routine with a schedule', function () {
         ],
         'begin_date' => '2025-01-01',
         'end_date' => '2025-01-31',
-     ]);
+    ]);
 
     $response->assertRedirect(route('routines.index'));
 });

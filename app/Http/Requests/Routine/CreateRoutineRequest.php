@@ -31,8 +31,8 @@ class CreateRoutineRequest extends FormRequest
             'begin_date' => ['date'],
             'end_date' => ['date', 'after:begin_date'],
             'exercises' => ['required', 'array'],
-            'exercises.*' => ['required', 'array:name'],
-            'exercises.*.name' => ['string', 'required'],
+            'exercises.*.id' => ['integer', 'required'],
+            'exercises.*.day_of_week' => ['integer', 'required'],
         ];
     }
 }

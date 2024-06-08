@@ -9,8 +9,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
- *
- *
  * @property int $id
  * @property string $name
  * @property string $email
@@ -23,6 +21,7 @@ use Illuminate\Notifications\Notifiable;
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Routine> $workout_plans
  * @property-read int|null $workout_plans_count
+ *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
@@ -35,16 +34,24 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Provider> $providers
  * @property-read int|null $providers_count
  * @property string|null $username
  * @property string|null $avatar
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|User whereAvatar($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUsername($value)
+ *
  * @property string $github_id
  * @property string $github_token
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|User whereGithubId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereGithubToken($value)
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Routine> $routines
+ * @property-read int|null $routines_count
+ *
  * @mixin \Eloquent
  */
 class User extends Authenticatable
@@ -62,7 +69,7 @@ class User extends Authenticatable
         'email',
         'password',
         'github_id',
-        'github_token'
+        'github_token',
     ];
 
     /**

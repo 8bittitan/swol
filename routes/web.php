@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/routines/new', [RoutineController::class, 'create'])->name('routines.create');
     Route::post('/routines/new', [RoutineController::class, 'store'])->name('routines.store');
     Route::get('/routines/{id}', [RoutineController::class, 'show'])->name('routines.show');
+    Route::delete('/routines/{id}', [RoutineController::class, 'destroy'])->name('routines.destroy');
 
     Route::get('/routines/{routine}/log', [LogController::class, 'create'])->name('logs.create');
     Route::post('/routines/{routine}/log', [LogController::class, 'store'])->name('logs.store');

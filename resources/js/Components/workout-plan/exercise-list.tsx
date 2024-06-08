@@ -3,8 +3,14 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/Components/ui/button'
 import { X } from 'lucide-react'
 
+type Exercise = {
+    name: string
+    id: number
+    day_of_week: number
+}
+
 type Props = {
-    exercises: { name: string }[]
+    exercises: Exercise[]
     setData: (field: string, exercises: { name: string }[]) => void
 }
 
@@ -39,18 +45,24 @@ export function ExerciseList({ exercises, setData }: Props) {
                     setDropping(false)
                 }}
                 onDrop={(e) => {
-                    const transfer = JSON.parse(
+                    const transfer: Exercise = JSON.parse(
                         e.dataTransfer.getData('exercise'),
                     )
 
-                    setData('exercises', exercises.concat(transfer))
+                    setData(
+                        'exercises',
+                        exercises.concat({
+                            ...transfer,
+                            day_of_week: 1,
+                        }),
+                    )
                     setDropping(false)
                 }}
             >
                 {exercises.map((exercise, i) => (
                     <Exercise
                         key={i}
-                        name={exercise.name}
+                        exercise={exercise}
                         removeExercise={() => removeExercise(i)}
                     />
                 ))}
@@ -60,14 +72,18 @@ export function ExerciseList({ exercises, setData }: Props) {
 }
 
 type ExerciseProps = {
-    name: string
+    exercise: {
+        name: string
+        id: number
+        day_of_week: number
+    }
     removeExercise(): void
 }
 
-function Exercise({ name, removeExercise }: ExerciseProps) {
+function Exercise({ exercise, removeExercise }: ExerciseProps) {
     return (
         <div className="p-4 h-16 rounded-lg bg-card flex justify-between items-center group">
-            <h3 className="text-card-foreground">{name}</h3>
+            <h3 className="text-card-foreground">{exercise.name}</h3>
 
             <Button
                 size="icon"

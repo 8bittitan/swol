@@ -18,7 +18,7 @@ import {
     SelectItem,
 } from '@/Components/ui/select'
 import Authenticated from '@/Layouts/AuthenticatedLayout'
-import { PageProps } from '@/types'
+import { Exercise, PageProps } from '@/types'
 import { useForm } from '@inertiajs/react'
 import { CalendarIcon } from 'lucide-react'
 import { FormEventHandler } from 'react'
@@ -30,18 +30,27 @@ type FormInputs = {
     status: string
     exercises: {
         name: string
+        id: number
+        day_of_week: number
     }[]
     begin_date?: Date
     end_date?: Date
 }
 
-export default function CreateRoutinePage({ auth }: PageProps) {
+type Props = {
+    exercises: Exercise[]
+}
+
+export default function CreateRoutinePage({
+    auth,
+    exercises,
+}: PageProps<Props>) {
     const { data, setData, post, processing, errors } = useForm<FormInputs>({
         name: '',
         description: '',
         status: 'active',
         exercises: [],
-        begin_date: undefined,
+        begin_date: new Date(),
         end_date: undefined,
     })
 
@@ -177,64 +186,36 @@ export default function CreateRoutinePage({ auth }: PageProps) {
                                 </Popover>
                             </div>
                             <div className="flex flex-col space-y-2">
-                                <div
-                                    className="p-4 rounded-lg bg-card"
-                                    draggable
-                                    onDragStart={(e) => {
-                                        e.dataTransfer.effectAllowed = 'move'
-                                        e.dataTransfer.setData(
-                                            'exercise',
-                                            JSON.stringify({
-                                                name: 'Bicep curls',
-                                            }),
-                                        )
-                                    }}
-                                >
-                                    <h3 className="text-card-foreground">
-                                        Bicep Curls
-                                    </h3>
-                                </div>
-                                <div
-                                    className="p-4 rounded-lg bg-card"
-                                    draggable
-                                    onDragStart={(e) => {
-                                        e.dataTransfer.effectAllowed = 'move'
-                                        e.dataTransfer.setData(
-                                            'exercise',
-                                            JSON.stringify({
-                                                name: 'Chest Press',
-                                            }),
-                                        )
-                                    }}
-                                >
-                                    <h3 className="text-card-foreground">
-                                        Chest Press
-                                    </h3>
-                                </div>
-                                <div
-                                    className="p-4 rounded-lg bg-card"
-                                    draggable
-                                    onDragStart={(e) => {
-                                        e.dataTransfer.effectAllowed = 'move'
-                                        e.dataTransfer.setData(
-                                            'exercise',
-                                            JSON.stringify({
-                                                name: 'Squats',
-                                            }),
-                                        )
-                                    }}
-                                >
-                                    <h3 className="text-card-foreground">
-                                        Squats
-                                    </h3>
-                                </div>
+                                {/* TODO: Implement Algolia InstantSearch */}
+                                {exercises.map((exercise) => (
+                                    <div
+                                        key={exercise.id}
+                                        className="p-4 rounded-lg bg-card"
+                                        draggable
+                                        onDragStart={(e) => {
+                                            e.dataTransfer.effectAllowed =
+                                                'move'
+                                            e.dataTransfer.setData(
+                                                'exercise',
+                                                JSON.stringify({
+                                                    id: exercise.id,
+                                                    name: exercise.name,
+                                                }),
+                                            )
+                                        }}
+                                    >
+                                        <h3 className="text-card-foreground">
+                                            {exercise.name}
+                                        </h3>
+                                    </div>
+                                ))}
                             </div>
                             <Button
                                 disabled={processing}
                                 type="submit"
                                 className="self-start"
                             >
-                                Save routine
+                                {processing ? 'Saving routine' : 'Save routine'}
                             </Button>
                         </div>
                     </div>

@@ -9,10 +9,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 /**
- *
- *
  * @property int $id
  * @property string $name
  * @property string|null $description
@@ -23,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Exercise> $exercises
  * @property-read int|null $exercises_count
  * @property-read \App\Models\User $user
+ *
  * @method static \Database\Factories\RoutineFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Routine newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Routine newQuery()
@@ -34,13 +34,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Routine whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Routine whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Routine whereUserId($value)
+ *
  * @property string|null $begin_date
  * @property string|null $end_date
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Routine whereBeginDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Routine whereEndDate($value)
+ *
  * @property-read mixed $remaining_weeks
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Log> $logs
  * @property-read int|null $logs_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RoutineExercise> $routineExercises
+ * @property-read int|null $routine_exercises_count
+ *
  * @mixin \Eloquent
  */
 class Routine extends Model
@@ -58,9 +64,14 @@ class Routine extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function exercises(): HasMany
+    public function routineExercises(): HasMany
     {
-        return $this->hasMany(Exercise::class);
+        return $this->hasMany(RoutineExercise::class);
+    }
+
+    public function exercises(): HasManyThrough
+    {
+        return $this->hasManyThrough(Exercise::class, RoutineExercise::class);
     }
 
     public function logs(): HasMany
